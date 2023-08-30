@@ -7,6 +7,7 @@ import { useState } from "react";
 
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase/firebase";
 
 import styles from '../login/Auth.module.scss';
 import LogoPath from '@/assets/colorful.svg';
@@ -15,7 +16,6 @@ import Loader from "@/components/loader/Loader";
 import Input from "@/components/input/Input";
 import Button from "@/components/button/Button";
 import Divider from "@/components/divider/Divider";
-import { auth } from "@/firebase/firebase";
 
 const RegisterClient = () => {
   const [email, setEmail] = useState('');
@@ -45,7 +45,7 @@ const RegisterClient = () => {
      .catch((err) => {
       setIsLoading(false);
       toast.error(err.message);
-     })
+     });
   };
 
   return (
