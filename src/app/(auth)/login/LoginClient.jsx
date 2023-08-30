@@ -14,6 +14,7 @@ import Input from "@/components/input/Input";
 import AutoSignInCheckbox from "@/components/autoSignInCheckbox/AutoSignInCheckbox";
 import Divider from "@/components/divider/Divider";
 import Button from "@/components/button/Button";
+import { toast } from "react-toastify";
 
 const LoginClient = () => {
   const [email, setEmail] = useState('');
@@ -29,8 +30,8 @@ const LoginClient = () => {
 
   const loginUser = (e) => {
     e.preventDefault();
-
     setIsLoading(true);
+    toast.info("성공!")
   };
 
   const signInWithGoogle = () => {};
