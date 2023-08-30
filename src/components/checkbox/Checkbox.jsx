@@ -1,6 +1,22 @@
-const Checkbox = () => {
+const Checkbox = ({
+  disabled = false,
+  checked = false,
+  label,
+  onChange,
+  ...restProps
+}) => {
   return (
-    <div>Checkbox</div>
+    <label style={{ fontSize: '1.4rem'}}>
+      <input
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={onChange}
+        {...restProps}
+      />
+      {' '}
+      {label}
+    </label>
   );
 }
  
