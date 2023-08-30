@@ -1,38 +1,30 @@
 'use client'
 
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 
-import styles from './Auth.module.scss';
+import styles from '../login/Auth.module.scss';
 import LogoPath from '@/assets/colorful.svg';
 
 import Loader from "@/components/loader/Loader";
 import Input from "@/components/input/Input";
-import AutoSignInCheckbox from "@/components/autoSignInCheckbox/AutoSignInCheckbox";
-import Divider from "@/components/divider/Divider";
 import Button from "@/components/button/Button";
+import Divider from "@/components/divider/Divider";
 
-const LoginClient = () => {
+const RegisterClient = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [cPassword, setCPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isAutoLogin, setIsAutoLogin] = useState(false);
 
   const router = useRouter();
 
-  const redirectUser = () => {
-    router.push('/');
-  };
-
-  const loginUser = (e) => {
+  const registerUser = () => {
     e.preventDefault();
-
     setIsLoading(true);
   };
-
-  const signInWithGoogle = () => {};
 
   return (
     <>
@@ -43,7 +35,7 @@ const LoginClient = () => {
             <Image src={LogoPath} alt="logo" />
           </h1>
     
-          <form onSubmit={loginUser} className={styles.form}>
+          <form onSubmit={registerUser} className={styles.form}>
             <Input 
               email
               icon='letter'
@@ -67,20 +59,25 @@ const LoginClient = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            
-            <div className={styles.group}>
-              <AutoSignInCheckbox 
-                checked={isAutoLogin}
-                onChange={(e) => setIsAutoLogin(e.target.checked)}
-              />
-            </div>
+
+            <Input 
+              password
+              icon='lock'
+              id='password'
+              name='password'
+              label='비밀번호 확인'
+              placeholder="비밀번호 확인"
+              className={styles.control}
+              value={cPassword}
+              onChange={(e) => setCPassword(e.target.value)}
+            />
     
             <div className={styles.buttonGroup}>
               <Button
                 type='submit'
                 width='100%'
               >
-                로그인
+                회원가입
               </Button>
     
               <Divider />
@@ -89,26 +86,16 @@ const LoginClient = () => {
                 width='100%'
                 secondary
               >
-                <Link href={'/register'}>
-                  회원가입
+                <Link href={'/login'}>
+                  로그인
                 </Link>
               </Button>
-            
-              <Divider />
-    
-              <div>
-                <Button
-                  onClick={signInWithGoogle}
-                >
-                  구글 로그인
-                </Button>
-              </div>
             </div>
           </form>
         </div>
       </section>
     </>
-  );
+  )
 }
 
-export default LoginClient;
+export default RegisterClient

@@ -1,6 +1,8 @@
+import RegisterClient from "./RegisterClient";
+
 const Register = () => {
   return (
-    <div>Register</div>
+    <RegisterClient />
   );
 }
  
