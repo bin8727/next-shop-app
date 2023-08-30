@@ -1,9 +1,12 @@
 'use client'
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+
+import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import styles from '../login/Auth.module.scss';
 import LogoPath from '@/assets/colorful.svg';
@@ -12,6 +15,7 @@ import Loader from "@/components/loader/Loader";
 import Input from "@/components/input/Input";
 import Button from "@/components/button/Button";
 import Divider from "@/components/divider/Divider";
+import { auth } from "@/firebase/firebase";
 
 const RegisterClient = () => {
   const [email, setEmail] = useState('');
@@ -21,9 +25,27 @@ const RegisterClient = () => {
 
   const router = useRouter();
 
-  const registerUser = () => {
+  const registerUser = (e) => {
     e.preventDefault();
+    
+    if (password !== cPassword) {
+      return toast.error('비밀번호가 일치하지 않습니다.')
+    }
     setIsLoading(true);
+
+    createUserWithEmailAndPassword(auth, email, password)
+     .then((userCredential) => {
+        const user = userCredential.user;
+
+        setIsLoading(false);
+
+        toast.success('회원가입 성공!');
+        router.push('/login');
+     })
+     .catch((err) => {
+      setIsLoading(false);
+      toast.error(err.message);
+     })
   };
 
   return (

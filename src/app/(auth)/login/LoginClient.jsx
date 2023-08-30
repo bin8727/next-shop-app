@@ -31,7 +31,7 @@ const LoginClient = () => {
   const loginUser = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    toast.info("성공!")
+    toast.info("성공!");
   };
 
   const signInWithGoogle = () => {};
