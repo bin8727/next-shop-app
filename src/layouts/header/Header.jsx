@@ -8,11 +8,15 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '@/firebase/firebase';
 import { toast } from 'react-toastify';
 
+import { useDispatch } from 'react-redux';
+import { REMOVE_ACTIVE_USR, SET_ACTIVE_USER } from '@/redux/slice/authSlice';
+
 import styles from './Header.module.scss';
 import InnerHeader from '../innerHeader/InnerHeader';
 
 const Header = () => {
   const pathname = usePathname();
+  const dispatch = useDispatch();
   const [displayName, setDisplayName] = useState('');
   const router = useRouter();
 
@@ -27,11 +31,19 @@ const Header = () => {
         } else {
           setDisplayName(user.displayName);
         }
+
+        dispatch(SET_ACTIVE_USER({
+          email: user.email,
+          userName: user.displayName ? user.displayName : displayName,
+          userID: user.uid
+        }));
       } else {
         setDisplayName('');
+
+        dispatch(REMOVE_ACTIVE_USR({}));
       }
     })
-  }, [])
+  }, [dispatch, displayName])
 
   const logoutUser = () => {
     signOut(auth)
